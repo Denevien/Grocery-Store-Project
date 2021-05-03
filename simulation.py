@@ -7,7 +7,7 @@ kinds of events in the simulation.
 # Just don't import any external libraries!
 from container import PriorityQueue
 from store import GroceryStore
-from event import Event, create_event_list
+from event import Event, create_event_list, CustomerArrive, LineClose
 
 
 class GroceryStoreSimulation:
@@ -26,6 +26,7 @@ class GroceryStoreSimulation:
     autotesting purposes. This makes it ESSENTIAL that you do not change the
     interface in any way!
     """
+
     # === Private Attributes ===
     # @type _events: PriorityQueue[Event]
     #     A sequence of events arranged in priority determined by the event
@@ -63,7 +64,40 @@ class GroceryStoreSimulation:
 
         initial_events = create_event_list(event_file)
 
+        for event in initial_events:
+            self._events.add(event)
+
+        #print(self._events._items)
         # TODO: Process all of the events, collecting statistics along the way.
+
+        #When a new customer joins, he or she always joins the open line with the fewest number
+        # of customers that he or she is allowed to join, choosing the one with
+        # the lowest index (as represented by the grocery store) if there is a tie.
+        # cycle through every initial event
+        #print(self._events)
+        while not self._events.is_empty():
+
+            event = self._events.remove()
+            #print(type(event))
+            new_events = event.do(self._store)
+            self._events.add(new_events)
+            print((self._events._items))
+
+
+
+
+
+
+
+
+   ##         elif isinstance(event, Line_close):
+
+
+            #elif isinstance(event, Begin_checkout):
+            #   ""
+
+   ##         elif isinstance(event, Finish_checkout):
+
 
         return stats
 

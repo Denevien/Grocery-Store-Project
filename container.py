@@ -56,6 +56,7 @@ class PriorityQueue(Container):
 
     All objects in the container must be of the same type.
     """
+
     # === Private Attributes ===
     # @type _items: list
     #     The items stored in the priority queue.
@@ -112,7 +113,7 @@ class PriorityQueue(Container):
         """
         return len(self._items) == 0
 
-    def add(self, item):
+    def add(self, events):
         """Add <item> to this PriorityQueue.
 
         @type self: PriorityQueue
@@ -128,4 +129,33 @@ class PriorityQueue(Container):
         ['arju', 'fred', 'hat', 'mona']
         """
         # TODO: Implement this method.
-        pass
+        #checks whether the accepted argument is iterable
+        if  not hasattr(events,"__iter__"):
+            events = [events]
+        #iterate over the entire list of possible events
+        for item in events:
+
+            loc = 0
+            if not self._items:
+            # print('works fine')
+            # the assignment below is an alternative to the
+            # standard list.append(item) function for single element assignment
+
+                self._items = [item]
+
+            else:
+                for event in self._items:
+                    # _item contains 3 events with the timestamps
+                    # 4,8 and 16
+                    # print(f'{item.timestamp} < {event.timestamp}')
+                    # print(item.__lt__(event)#)
+
+                    if item.__lt__(event):
+                        # print(f'{item.timestamp} > {event.timestamp}')
+                        # print(item.__lt__(event))
+                        break
+                        # print(loc)
+                    loc += 1
+                self._items.insert(loc, item)
+
+
